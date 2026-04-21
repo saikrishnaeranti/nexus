@@ -1,4 +1,7 @@
 const paletteSelect = document.querySelector("#palette-select");
+const siteHeader = document.querySelector(".site-header");
+const menuToggle = document.querySelector(".menu-toggle");
+const siteMenu = document.querySelector("#site-menu");
 const savedPalette = localStorage.getItem("digitalNexusPalette") || "warm";
 
 document.body.dataset.theme = savedPalette;
@@ -8,6 +11,20 @@ if (paletteSelect) {
   paletteSelect.addEventListener("change", () => {
     document.body.dataset.theme = paletteSelect.value;
     localStorage.setItem("digitalNexusPalette", paletteSelect.value);
+  });
+}
+
+if (siteHeader && menuToggle && siteMenu) {
+  menuToggle.addEventListener("click", () => {
+    const isOpen = siteHeader.classList.toggle("is-menu-open");
+    menuToggle.setAttribute("aria-expanded", String(isOpen));
+  });
+
+  siteMenu.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", () => {
+      siteHeader.classList.remove("is-menu-open");
+      menuToggle.setAttribute("aria-expanded", "false");
+    });
   });
 }
 
